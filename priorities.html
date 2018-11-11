@@ -46,13 +46,21 @@
     var currentPriority = ""
     var currentPriorityLevel = 1
     var priorities = []
+
     function addNewPriority(event){
+      var priority = priorities.find(p => p.name === currentPriority)
+      if (priority) {
+        alert("That is already a priority!")
+        clearBox()
+        return false;
+      }
       priorities.push({name: currentPriority, level: findLowestPriority() + 1})
       drawPriorities()
       clearBox()
-
       return false;
     }
+
+
 
     function findLowestPriority() {
       return priorities.map(function(priority) {
@@ -74,15 +82,14 @@
       currentPriority = event.target.value
     }
 
-    function priorityLevelChange(event){
-      console.log(event.target.value)
-      currentPriorityLevel = event.target.value
-    }
+    // function priorityLevelChange(event){
+    //   console.log(event.target.value)
+    //   currentPriorityLevel = event.target.value
+    // }
 
     function makeHigherPriority(name) {
       var priority = priorities.find(p => p.name === name)
       priority.level = priority.level - 1
-
       drawPriorities()
     }
 
@@ -110,7 +117,7 @@
         .join("")
       list.innerHTML = currentPriorities
     }
-
+    clearBox()
     drawPriorities()
 
 
