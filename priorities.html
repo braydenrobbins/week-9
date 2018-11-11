@@ -25,7 +25,7 @@
     <h1>
       priorities
     </h1>
-    <form onsubmit="return addNewPriority(event)">
+    <form autocomplete="off" onsubmit="return addNewPriority(event)">
       <div class="form-group">
         <label for="exampleInputEmail1">Priority</label>
         <input type="text" class="form-control" onchange="return priorityChange(event)" id="exampleInputPriority1" placeholder="Enter a priority.... like Family">
@@ -47,10 +47,23 @@
     var currentPriorityLevel = 1
     var priorities = []
     function addNewPriority(event){
-      priorities.push({name: currentPriority, level: priorities.length + 1})
+      priorities.push({name: currentPriority, level: findLowestPriority() + 1})
       drawPriorities()
+      clearBox()
 
       return false;
+    }
+
+    function findLowestPriority() {
+      return priorities.map(function(priority) {
+        return priority.level;
+      }).reduce(function(previous, current) {
+          return Math.max(previous, current)
+      }, 0)
+    }
+
+    function clearBox() {
+
     }
 
     function priorityChange(event){
