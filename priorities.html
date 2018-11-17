@@ -22,9 +22,7 @@
     </div>
   </nav>
   <div class="container">
-    <h1>
-      priorities
-    </h1>
+    <h1 class="center">To-Do List</h1>
     <form autocomplete="off" onsubmit="return addNewPriority(event)">
       <div class="form-group">
         <label for="exampleInputEmail1">Priority</label>
@@ -98,6 +96,9 @@
       var priority = priorities.find(p => p.name === name)
       var newLevel = priority.level + 1
       var lowerPriority = priorities.find(p => p.level === newLevel)
+      if (priorities.length < priority.level + 1) {
+        return;
+      }
       if (lowerPriority) {
         lowerPriority.level = priority.level
       }
@@ -108,6 +109,7 @@
     function drawPriorities() {
       var list = document.getElementById("priority-list")
       var currentPriorities = priorities
+
         .sort((x,y) => x.level - y.level)
         .map(x => {
           return `<li class="list-group-item">
