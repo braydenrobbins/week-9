@@ -2,3 +2,19 @@
 .float-buttons {
  float: right;
 }
+
+body, html {
+    background-color: black;
+    color: orange;
+}
+
+.btn {
+    border: none;
+    background-color: black;
+    color: orange;
+}
+
+.badge {
+    background-color: black;
+}
+

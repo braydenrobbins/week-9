@@ -111,7 +111,7 @@
         .sort((x,y) => x.level - y.level)
         .map(x => {
           return `<li class="list-group-item">
-          <span class="badge badge-primary badge-pill"> ${x.level} </span>
+          <span class="badge badge-primary"> ${x.level} </span>
           <span>${x.name}</span>
           <span class="float-buttons">
             <button onclick="return makeHigherPriority('${x.name}')" type="button" class="btn btn-sm btn-outline-primary">Make Higher Priority</button>
