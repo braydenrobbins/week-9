@@ -22,15 +22,15 @@
     </div>
   </nav>
   <div class="container">
-    <h1 class="center">Priorities</h1>
+    <h1 class="center">To-Do List</h1>
     <form autocomplete="off" onsubmit="return addNewPriority(event)">
       <div class="form-group">
-        <label for="exampleInputEmail1">Priority</label>
-        <input type="text" class="form-control" onchange="return priorityChange(event)" id="priorityName" placeholder="Enter a priority">
+        <label for="exampleInputEmail1">Task</label>
+        <input type="text" class="form-control" onchange="return priorityChange(event)" id="priorityName" placeholder="Enter a task">
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-    <ul id="priority-list" class="list-group"> </ul>
+    <ul id="todo-list" class="list-group"> </ul>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -49,7 +49,7 @@
         return false;
       }
       priorities.push({name: currentPriority, level: findLowestPriority() + 1})
-      drawPriorities()
+      drawTask()
       clearBox()
       return false;
     }
@@ -76,46 +76,21 @@
       currentPriority = event.target.value
     }
 
-    function makeHigherPriority(name) {
-      var priority = priorities.find(p => p.name === name)
-      var newLevel = priority.level - 1
-      var higherPriority = priorities.find(p => p.level === newLevel)
-      if (priority.level === 1) {
-        return
-      }
-      if (higherPriority) {
-        higherPriority.level = priority.level
-      }
-      priority.level = newLevel;
-      drawPriorities()
-    }
 
-    function makeLowerPriority(name) {
-      var priority = priorities.find(p => p.name === name)
-      var newLevel = priority.level + 1
-      var lowerPriority = priorities.find(p => p.level === newLevel)
-      if (priorities.length < priority.level + 1) {
-        return;
-      }
-      if (lowerPriority) {
-        lowerPriority.level = priority.level
-      }
-      priority.level = newLevel;
-      drawPriorities()
-    }
 
-    function drawPriorities() {
-      var list = document.getElementById("priority-list")
+ 
+    function drawTask() {
+      var list = document.getElementById("todo-list")
       var currentPriorities = priorities
 
         .sort((x,y) => x.level - y.level)
         .map(x => {
           return `<li class="list-group-item">
-          <span class="badge badge-primary"> ${x.level} </span>
           <span>${x.name}</span>
-          <span class="float-buttons">
-            <button onclick="return makeHigherPriority('${x.name}')" type="button" class="btn btn-sm btn-outline-primary">Make Higher Priority</button>
-            <button onclick="return makeLowerPriority('${x.name}')" type="button" class="btn btn-sm btn-outline-secondary">Make Lower Priority</button>
+          <span class="float-buttons btn-group-toggle" data-toggle="buttons>
+            <label class="btn btn-secondary active">
+            <input type="checkbox" autocomplete="on">
+            </label>
           </span>
           </li>`
         })
@@ -123,7 +98,7 @@
       list.innerHTML = currentPriorities
     }
     clearBox()
-    drawPriorities()
+    drawTask()
 
 
   </script>
