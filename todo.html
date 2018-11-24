@@ -23,10 +23,10 @@
   </nav>
   <div class="container">
     <h1 class="center">To-Do List</h1>
-    <form autocomplete="off" onsubmit="return addNewPriority(event)">
+    <form autocomplete="off" onsubmit="return addNewTask(event)">
       <div class="form-group">
         <label for="exampleInputEmail1">Task</label>
-        <input type="text" class="form-control" onchange="return priorityChange(event)" id="priorityName" placeholder="Enter a task">
+        <input type="text" class="form-control" onchange="return taskChange(event)" id="taskName" placeholder="Enter a task">
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
@@ -37,65 +37,55 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   <script>
-    var currentPriority = ""
-    var currentPriorityLevel = 1
-    var priorities = []
+    var currentTask = ""
+    var tasks = []
 
-    function addNewPriority(event){
-      var priority = priorities.find(p => p.name === currentPriority)
-      if (priority) {
-        alert("That is already a priority!")
+    function addNewTask(event){
+      var task = tasks.find(p => p.name === currentTask)
+      if (task) {
+        alert("That is already on your To-Do List!")
         clearBox()
         return false;
       }
-      priorities.push({name: currentPriority, level: findLowestPriority() + 1})
+      tasks.push({name: currentTask})
       drawTask()
       clearBox()
       return false;
     }
 
-
-
-    function findLowestPriority() {
-      return priorities.map(function(priority) {
-        return priority.level;
-      }).reduce(function(previous, current) {
-          return Math.max(previous, current)
-      }, 0)
-    }
-
     function clearBox() {
-      var priorityName = $("#priorityName")
-      priorityName.val("");
-      priorityName.focus();
+      var taskName = $("#taskName")
+      taskName.val("");
+      taskName.focus();
       
     }
 
-    function priorityChange(event){
+    function taskChange(event){
       console.log(event.target.value)
-      currentPriority = event.target.value
+      currentTask = event.target.value
     }
 
+    function setDailyTask() {
+        
+    }
 
-
- 
     function drawTask() {
       var list = document.getElementById("todo-list")
-      var currentPriorities = priorities
+      var currentTask = tasks
 
         .sort((x,y) => x.level - y.level)
         .map(x => {
           return `<li class="list-group-item">
           <span>${x.name}</span>
-          <span class="float-buttons btn-group-toggle" data-toggle="buttons>
+          <span class="float-buttons btn-group btn-group-toggle" data-toggle="buttons>
             <label class="btn btn-secondary active">
-            <input type="checkbox" autocomplete="on">
+            <input type="radio" name="options" id="option1" autocomplete="off" checked>
             </label>
           </span>
           </li>`
         })
         .join("")
-      list.innerHTML = currentPriorities
+      list.innerHTML = currentTask
     }
     clearBox()
     drawTask()
