@@ -12,6 +12,7 @@ body, html {
     border: none;
     background-color: black;
     color: orange;
+    margin: 5px;
 }
 
 .badge {
