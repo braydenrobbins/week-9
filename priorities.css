@@ -22,3 +22,14 @@ body, html {
 .center {
     text-align: center;
 }
+
+.completed {
+    text-decoration: line-through;
+    color: gray
+}
+
+.goal {
+    background-color: red;
+    padding: 10px;
+
+}

@@ -65,13 +65,24 @@
       currentTask = event.target.value
     }
 
-    function setDailyTask() {
-      
+    function setDailyTask(taskName) {
+      var task = tasks.find( t => t.name === taskName)
+      tasks = tasks.map(t => {
+        t.goal = false
+        return t
+      })
+      task.goal = true
+      console.log(task)
+      drawTask()
+
     }
 
-    function deleteTask(task){
-      tasks = tasks.filter(t => t !== task.name)
-      return tasks
+    function deleteTask(taskName){
+      var task = tasks.find( t => t.name === taskName)
+      task.completed = true
+      console.log(task)
+      drawTask()
+
     }
 
     function drawTask() {
@@ -80,12 +91,12 @@
 
         .sort((x,y) => x.level - y.level)
         .map(x => {
-          return `<li class="list-group-item">
-          <span>${x.name}</span>
+          return `<li class="list-group-item ${x.goal ? 'goal':''}">
+          <span class="${x.completed ? 'completed':''}">${x.name}</span>
           <span class="float-buttons btn-group btn-group-toggle" data-toggle="buttons>
             <label class="btn btn-secondary active">
-              <button onclick="return setDailyTask()" type="button" class="btn btn-sm btn-outline-primary">Set as Today's Task</button>
-              <button onclick="return deleteTask(task)" type="button" class="btn btn-sm btn-outline-primary">Completed Task</button>
+              <button onclick="setDailyTask('${x.name}')" type="button" class="btn btn-sm btn-outline-primary" ${x.completed ? 'disabled':''}>Set as Today's Task</button>
+              <button onclick="deleteTask('${x.name}')" type="button" class="btn btn-sm btn-outline-primary">Completed Task</button>
             </label>
           </span>
           </li>`
