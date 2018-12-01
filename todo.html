@@ -28,6 +28,9 @@
         <label for="exampleInputEmail1">Task</label>
         <input type="text" class="form-control" onchange="return taskChange(event)" id="taskName" placeholder="Enter a task">
       </div>
+      <div id="hint" class="alert alert-warning hide" role="alert">
+        That is already on your To-Do List!
+      </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     <ul id="todo-list" class="list-group"> </ul>
@@ -40,17 +43,23 @@
     var currentTask = ""
     var tasks = []
 
-    function addNewTask(event){
-      var task = tasks.find(p => p.name === currentTask)
-      if (task) {
-        alert("That is already on your To-Do List!")
-        clearBox()
-        return false;
+    function addNewTask(event) {
+      event.preventDefault();
+      if(sameTask()) {
+        clearBox();
+        return;
       }
       tasks.push({name: currentTask})
       drawTask()
       clearBox()
-      return false;
+    }
+
+    function sameTask () {
+      var hint = document.getElementById("hint");
+      var task = tasks.find(t => t.name === currentTask)
+      var exists = !!task;
+      hint.className = exists ? "" : "hide";
+      return exists
     }
 
     function clearBox() {
@@ -128,11 +137,10 @@
 
     var higherOrderPractice = [{"name": "bob", "age": 14}, {"name": "zach", "age": 25}, {"name": "carson", "age": 28}]
     newArray = higherOrderPractice
-      .filter(p => p.age > 21)
+      .filter(p => p.age > 13)
       .map(g => g.age)
-      .reduce((x, y) => (x + y)/2)
-      
-    console.log(newArray)
+      var averageAge = newArray.reduce((x, y) => (x + y)) / newArray.length
+    console.log(averageAge)
 
   </script>
 </body>
