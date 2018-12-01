@@ -29,7 +29,9 @@ body, html {
 }
 
 .goal {
-    background-color: red;
-    padding: 10px;
-
+    background-color: yellow;
+    color: #222;
+    padding: 30px;
+    font-size: 25px;
+    
 }

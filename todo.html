@@ -77,7 +77,7 @@
 
     }
 
-    function deleteTask(taskName){
+    function completeTask(taskName){
       var task = tasks.find( t => t.name === taskName)
       task.completed = true
       console.log(task)
@@ -88,15 +88,13 @@
     function drawTask() {
       var list = document.getElementById("todo-list")
       var currentTask = tasks
-
-        .sort((x,y) => x.level - y.level)
         .map(x => {
           return `<li class="list-group-item ${x.goal ? 'goal':''}">
           <span class="${x.completed ? 'completed':''}">${x.name}</span>
           <span class="float-buttons btn-group btn-group-toggle" data-toggle="buttons>
             <label class="btn btn-secondary active">
               <button onclick="setDailyTask('${x.name}')" type="button" class="btn btn-sm btn-outline-primary" ${x.completed ? 'disabled':''}>Set as Today's Task</button>
-              <button onclick="deleteTask('${x.name}')" type="button" class="btn btn-sm btn-outline-primary">Completed Task</button>
+              <button onclick="completeTask('${x.name}')" type="button" class="btn btn-sm btn-outline-primary">Completed Task</button>
             </label>
           </span>
           </li>`
@@ -104,9 +102,9 @@
         .join("")
       list.innerHTML = currentTask
     }
+
     clearBox()
     drawTask()
-
 
   </script>
 
@@ -124,8 +122,16 @@
     //  var mapPractice = [{"name": "bob"}, {"name": "zach"}, {"name": "carson"}]
     //  console.log(mapPractice.map(e => "hello " + e.name))
 
-    var filterPractice = [{"name": "bob"}, {"name": "zach"}, {"name": "carson"}]
-    newArray = filterPractice.filter(e => e.name !== "bob")
+    // var filterPractice = [{"name": "bob", "age": 10}, {"name": "zach", "age": 17}, {"name": "carson", "age": 29}]
+    // newArray = filterPractice.filter(e => e.name !== "bob")
+    // console.log(newArray)
+
+    var higherOrderPractice = [{"name": "bob", "age": 14}, {"name": "zach", "age": 25}, {"name": "carson", "age": 28}]
+    newArray = higherOrderPractice
+      .filter(p => p.age > 21)
+      .map(g => g.age)
+      .reduce((x, y) => (x + y)/2)
+      
     console.log(newArray)
 
   </script>
