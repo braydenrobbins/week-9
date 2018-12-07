@@ -33,6 +33,7 @@
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    <div class="progress" id="progressBar"></div>
     <ul id="todo-list" class="list-group"> </ul>
   </div>
 
@@ -42,6 +43,7 @@
   <script>
     var currentTask = ""
     var tasks = []
+    var numberComplete = 0;
 
     function addNewTask(event) {
       event.preventDefault();
@@ -89,13 +91,16 @@
     function completeTask(taskName){
       var task = tasks.find( t => t.name === taskName)
       task.completed = true
+      numberComplete++;
       console.log(task)
       drawTask()
-
     }
 
     function drawTask() {
       var list = document.getElementById("todo-list")
+      var percentComplete = (numberComplete/tasks.length)*100;
+      var progressBar = document.getElementById("progressBar");
+      progressBar.innerHTML = `<div class="progress-bar" role="progressbar" style="width: ${percentComplete}%;" aria-valuenow="${percentComplete}" aria-valuemin="0" aria-valuemax="100">${percentComplete}%</div>`
       var currentTask = tasks
         .map(x => {
           return `<li class="list-group-item ${x.goal ? 'goal':''}">
@@ -111,10 +116,8 @@
         .join("")
       list.innerHTML = currentTask
     }
-
     clearBox()
     drawTask()
-
   </script>
 
   <script>
