@@ -43,6 +43,7 @@
   <script>
     var currentTask = ""
     var tasks = [];
+    var priorityTagOptions = ["Meh", "OKCoders", "Work"];
 
     function addNewTask(event) {
       event.preventDefault();
@@ -50,9 +51,17 @@
         clearBox();
         return;
       }
-      tasks.push({name: currentTask})
+      tasks.push({name: currentTask, priorityTag: ""})
       drawTask()
       clearBox()
+    }
+
+    function priorityOptionsHtml(currentTag) {
+      return priorityTagOptions
+      .map(x => {
+        var selected = x === currentTag? 'selected' : '';
+        return `<option ${selected}>${x}</option>`})
+      .join("");
     }
 
     function sameTask () {
@@ -69,6 +78,14 @@
       
     }
 
+    function priorityTagChange(event){
+      var priorityName = event.target.id
+      var priorityTag = event.target.value
+      var task = tasks.find(x => x.name === priorityName)
+      console.log(task);
+      task.priorityTag = priorityTag;
+    }    
+
     function taskChange(event){
       console.log(event.target.value)
       currentTask = event.target.value
@@ -81,7 +98,6 @@
         return t
       })
       task.goal = true
-      console.log(task)
       drawTask()
 
     }
@@ -101,6 +117,13 @@
         .map(x => {
           return `<li class="list-group-item ${x.goal ? 'goal':''}">
           <span class="${x.completed ? 'completed':''}">${x.name}</span>
+          <div class="form-group">
+            <label for="exampleFormControlSelect1"></label>
+            <select onchange="return priorityTagChange(event)" class="form-control" id="${x.name}">
+              ${priorityOptionsHtml(x.priorityTag)}
+            </select>
+          </div>
+
           <span class="float-buttons btn-group btn-group-toggle" data-toggle="buttons>
             <label class="btn btn-secondary active">
               <button onclick="setDailyTask('${x.name}')" type="button" class="btn btn-sm btn-outline-primary" ${x.completed ? 'disabled':''}>Set as Today's Task</button>
@@ -139,7 +162,7 @@
       .filter(p => p.age > 13)
       .map(g => g.age)
       var averageAge = newArray.reduce((x, y) => (x + y)) / newArray.length
-    console.log(averageAge)
+    //console.log(averageAge)
 
   </script>
 </body>

@@ -75,35 +75,54 @@
       console.log(event.target.value)
       currentPriority = event.target.value
     }
+    
+    function changePriorityLevel() {
+      var priority = priorities.find(p => p.name === name)
+      var currentLevel = priority.level;
+      var siblingPriority = priorities.find(p => p.level === func(currentLevel))
+      siblingpriority.level = currentLevel
+      priority.level = func(priority.level)
+    }
 
     function makeHigherPriority(name) {
-      var priority = priorities.find(p => p.name === name)
-      var newLevel = priority.level - 1
-      var higherPriority = priorities.find(p => p.level === newLevel)
-      if (priority.level === 1) {
-        return
-      }
-      if (higherPriority) {
-        higherPriority.level = priority.level
-      }
-      priority.level = newLevel;
-      drawPriorities()
+      changePriorityLevel(name, function(a) {return a - 1})
+      drawPriorities();
     }
 
     function makeLowerPriority(name) {
-      var priority = priorities.find(p => p.name === name)
-      var newLevel = priority.level + 1
-      var lowerPriority = priorities.find(p => p.level === newLevel)
-      if (priorities.length < priority.level + 1) {
-        return;
-      }
-      if (lowerPriority) {
-        lowerPriority.level = priority.level
-      }
-      priority.level = newLevel;
-      drawPriorities()
+      changePriorityLevel(name, function(a) {return a + 1})
+      drawPriorities();
     }
 
+    // function makeHigherPriority(name) {
+    //   var priority = priorities.find(p => p.name === name)
+    //   var newLevel = priority.level - 1
+    //   var higherPriority = priorities.find(p => p.level === newLevel)
+    //   if (priority.level === 1) {
+    //     return
+    //   }
+    //   if (higherPriority) {
+    //     higherPriority.level = priority.level
+    //   }
+    //   priority.level = newLevel;
+    //   drawPriorities()
+    // }
+
+    // function makeLowerPriority(name) {
+    //   var priority = priorities.find(p => p.name === name)
+    //   var newLevel = priority.level + 1
+    //   var lowerPriority = priorities.find(p => p.level === newLevel)
+    //   if (priorities.length < priority.level + 1) {
+    //     return;
+    //   }
+    //   if (lowerPriority) {
+    //     lowerPriority.level = priority.level
+    //   }
+    //   priority.level = newLevel;
+    //   drawPriorities()
+    // }
+
+    
     function drawPriorities() {
       var list = document.getElementById("priority-list")
       var currentPriorities = priorities
