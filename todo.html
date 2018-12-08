@@ -94,7 +94,7 @@
 
     function drawTask() {
       var list = document.getElementById("todo-list")
-      var percentComplete = ((tasks.filter(x => x.completed).length)/tasks.length)*100;
+      var percentComplete = Math.round(((tasks.filter(x => x.completed).length)/tasks.length)*100);
       var progressBar = document.getElementById("progressBar");
       progressBar.innerHTML = `<div class="progress-bar" role="progressbar" style="width: ${percentComplete}%;" aria-valuenow="${percentComplete}" aria-valuemin="0" aria-valuemax="100">${percentComplete}%</div>`
       var currentTask = tasks
