@@ -58,8 +58,7 @@
 
     function sameTask () {
       var hint = document.getElementById("hint");
-      var task = tasks.find(t => t.name === currentTask)
-      var exists = !!task;
+      var exists = tasks.some(t => t.name === currentTask)
       hint.className = exists ? "" : "hide";
       return exists
     }
